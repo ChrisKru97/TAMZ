@@ -1,0 +1,25 @@
+name: tamz
+description: TAMZ - Krutsche
+
+version: 1.0.0+1
+
+environment:
+  sdk: ^2.6.0
+
+dependencies:
+  flutter:
+    sdk: flutter
+  url_launcher: any
+  shared_preferences: any
+  http: any
+
+dev_dependencies:
+  flutter_test:
+    sdk: flutter
+
+flutter:
+
+  uses-material-design: true
+
+  assets:
+    - assets/zodiac/
