@@ -28,4 +28,7 @@ flutter:
   assets:
     - assets/zodiac/
     - assets/audio/
-    - assets/game
+    - assets/game/item/
+    - assets/game/robot/
+    - assets/game/terrain/
+    - assets/game/rip.png

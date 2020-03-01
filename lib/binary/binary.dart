@@ -1,11 +1,30 @@
 import 'dart:async';
 
 import 'package:flutter/material.dart';
+import 'package:soundpool/soundpool.dart';
 
 class Binary extends StatelessWidget {
+  Binary(this.pool);
+
+  final Soundpool pool;
+
   @override
   Widget build(BuildContext context) => StreamBuilder<DateTime>(
-      stream: Stream.periodic(Duration(seconds: 1), (_) => DateTime.now()),
+      stream: Stream.periodic(Duration(seconds: 1), (_) {
+        final date = DateTime.now();
+        if (date.second % 10 > 1) {
+          if (date.second % 2 == 0) {
+            pool.play(0);
+          } else {
+            pool.play(1);
+          }
+        } else if (date.second % 60 == 0) {
+          pool.play(2);
+        } else if (date.second % 10 == 0) {
+          pool.play(3);
+        }
+        return date;
+      }),
       builder: (BuildContext context, AsyncSnapshot<DateTime> snapshot) =>
           Scaffold(
               appBar: AppBar(title: Text('Binary Clock')),
@@ -20,6 +39,7 @@ class Binary extends StatelessWidget {
 
 class _BinaryPainter extends CustomPainter {
   _BinaryPainter(this.hours, this.minutes, this.seconds);
+
   final int hours;
   final int minutes;
   final int seconds;
