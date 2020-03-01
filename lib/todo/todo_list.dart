@@ -106,16 +106,33 @@ class _TodoListState extends State<TodoList> {
                           todo: todo,
                           save: editInList(index),
                         )),
-                    child: ExpansionTile(
-                      title: Text(
-                          '${todo.title}: ${DateTime.fromMillisecondsSinceEpoch(todo.date).toString().split(' ')[0]}'),
-                      children: <Widget>[
-                        Text('Note: ${todo.notes}'),
-                        Text('Priority: ${todo.priority.name}'),
-                        Text(
-                            'Vibration: ${todo.vibrate ? 'enabled' : 'disabled'}'),
-                        Text('Volume: ${todo.volume}')
-                      ],
+                    child: Dismissible(
+                      direction: DismissDirection.startToEnd,
+                      background: Container(
+                          color: Colors.red,
+                          child: Align(
+                            alignment: Alignment.centerLeft,
+                            child: Padding(
+                              padding: const EdgeInsets.only(left: 24),
+                              child: Icon(
+                                Icons.delete_forever,
+                                color: Colors.white,
+                              ),
+                            ),
+                          )),
+                      key: Key(todo.title),
+                      onDismissed: (_) => removeFromList(index),
+                      child: ExpansionTile(
+                        title: Text(
+                            '${todo.title}: ${DateTime.fromMillisecondsSinceEpoch(todo.date).toString().split(' ')[0]}'),
+                        children: <Widget>[
+                          Text('Note: ${todo.notes}'),
+                          Text('Priority: ${todo.priority.name}'),
+                          Text(
+                              'Vibration: ${todo.vibrate ? 'enabled' : 'disabled'}'),
+                          Text('Volume: ${todo.volume}')
+                        ],
+                      ),
                     ),
                   );
                 })),

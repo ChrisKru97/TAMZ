@@ -3,7 +3,7 @@ import 'dart:convert';
 
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:http/http.dart';
+import 'package:sse_client/sse_client.dart';
 
 import '../custom_button.dart';
 
@@ -45,14 +45,15 @@ class _ConverterState extends State<Converter> {
   bool _english = true;
 
   Future<List<Currency>> loadData() async {
-    final res = await get(Uri.https(
-        'homel.vsb.cz', '/~mor03/TAMZ/cnb_json.php', <String, String>{
+    final client = SseClient.connect(
+        Uri.https('homel.vsb.cz', '/~mor03/TAMZ/cnb_json.php', <String, String>{
       'date': _date.toString().split(' ')[0],
-      'lang': _english ? 'en' : 'cs'
+      'lang': _english ? 'en' : 'cs',
+      'sse': 'y'
     }));
-    if (res.statusCode == 200) {
-      print(jsonDecode(res.body)['date']);
-      return (jsonDecode(res.body)['data'] as List<dynamic>)
+    final data = await client.stream.first;
+    if ((data?.length ?? 0) > 0) {
+      return (jsonDecode(data)['data'] as List<dynamic>)
           .map((dynamic currency) => Currency.fromJson(currency))
           .toList()
             ..insert(

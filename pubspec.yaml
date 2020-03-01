@@ -12,6 +12,10 @@ dependencies:
   url_launcher: any
   shared_preferences: any
   http: any
+  sse: any
+  html: any
+  sse_client: any
+  soundpool: any
 
 dev_dependencies:
   flutter_test:
@@ -23,3 +27,5 @@ flutter:
 
   assets:
     - assets/zodiac/
+    - assets/audio/
+    - assets/game

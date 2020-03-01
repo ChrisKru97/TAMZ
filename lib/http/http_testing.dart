@@ -32,8 +32,9 @@ class _HttpTestingState extends State<HttpTesting> {
   }
 
   void testToken() async {
-    final res = await post(_urlController.text,
-        headers: {'API-Token': base64Encode(utf8.encode('login:$token'))});
+    final res = await post(_urlController.text, headers: {
+      'API-Token': base64Encode(utf8.encode('${_loginController.text}:$token'))
+    });
     setState(() {
       message = res.body;
     });
