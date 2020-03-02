@@ -178,62 +178,65 @@ class _GameState extends State<Game> {
                       }).toList()),
                       StreamBuilder<Position>(
                         stream: _positionStreamController.stream,
-                        builder: (context, itemSnapshot) => StreamBuilder<
-                                GameState>(
-                            stream: _streamController.stream,
-                            initialData: actual,
-                            builder: (context, snapshot) {
-                              final x = side * snapshot.data.x + 24;
-                              final y = side * snapshot.data.y + 24;
-                              if (itemSnapshot.hasData &&
-                                  (((max - 2) * itemSnapshot.data.x)
-                                                  .roundToDouble() *
-                                              32 +
-                                          32) <
-                                      (x + 37) &&
-                                  (((max - 2) * itemSnapshot.data.x)
-                                                  .roundToDouble() *
-                                              32 +
-                                          64) >
-                                      x &&
-                                  (((max - 2) * itemSnapshot.data.y)
-                                                  .roundToDouble() *
-                                              32 +
-                                          32) <
-                                      (y + 37) &&
-                                  (((max - 2) * itemSnapshot.data.y)
-                                                  .roundToDouble() *
-                                              32 +
-                                          64) >
-                                      y) {
-                                score += 1;
-                                _scoreStreamController.sink.add(score);
-                                _positionStreamController.sink.add(Position(
-                                    x: rand.nextDouble(),
-                                    y: rand.nextDouble(),
-                                    which: rand.nextInt(4)));
-                              }
-                              return Positioned(
-                                  top: y,
-                                  left: x,
-                                  child: Transform.rotate(
-                                      angle: snapshot.data.direction ==
-                                              Direction.east
-                                          ? pi * 3 / 2
-                                          : snapshot.data.direction ==
-                                                  Direction.north
-                                              ? pi
+                        builder: (context, itemSnapshot) =>
+                            StreamBuilder<GameState>(
+                                stream: _streamController.stream,
+                                initialData: actual,
+                                builder: (context, snapshot) {
+                                  final x = side * snapshot.data.x + 24;
+                                  final y = side * snapshot.data.y + 24;
+                                  if (itemSnapshot.hasData &&
+                                      ((max - 2) * itemSnapshot.data.x)
+                                                      .roundToDouble() *
+                                                  32 +
+                                              11 <
+                                          x &&
+                                      (((max - 2) * itemSnapshot.data.x)
+                                                      .roundToDouble() *
+                                                  32 +
+                                              48) >
+                                          x &&
+                                      ((max - 2) * itemSnapshot.data.y)
+                                                      .roundToDouble() *
+                                                  32 +
+                                              11 <
+                                          y &&
+                                      (((max - 2) * itemSnapshot.data.y)
+                                                      .roundToDouble() *
+                                                  32 +
+                                              48) >
+                                          y) {
+                                    score += 1;
+                                    _scoreStreamController.sink.add(score);
+                                    _positionStreamController.sink.add(Position(
+                                        x: rand.nextDouble(),
+                                        y: rand.nextDouble(),
+                                        which: rand.nextInt(4)));
+                                  }
+                                  return Positioned(
+                                      top: y,
+                                      left: x,
+                                      child: Transform.rotate(
+                                          angle: snapshot.data.direction ==
+                                                  Direction.east
+                                              ? pi * 3 / 2
                                               : snapshot.data.direction ==
-                                                      Direction.west
-                                                  ? pi / 2
-                                                  : 0,
-                                      child: StreamBuilder<double>(
-                                          stream:
-                                              _animationStreamController.stream,
-                                          initialData: 0,
-                                          builder: (context, snapshot) =>
-                                              robot[snapshot.data.floor()])));
-                            }),
+                                                      Direction.north
+                                                  ? pi
+                                                  : snapshot.data.direction ==
+                                                          Direction.west
+                                                      ? pi / 2
+                                                      : 0,
+                                          child: StreamBuilder<double>(
+                                              stream: _animationStreamController
+                                                  .stream,
+                                              initialData: 0,
+                                              builder: (context, snapshot) {
+                                                print(snapshot.data.floor().toString());
+                                                return robot[
+                                                    snapshot.data.floor()];
+                                              })));
+                                }),
                       ),
                       StreamBuilder<Position>(
                         stream: _positionStreamController.stream,

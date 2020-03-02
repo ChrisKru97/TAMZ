@@ -1,4 +1,5 @@
 import 'dart:async';
+import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:soundpool/soundpool.dart';
@@ -14,14 +15,14 @@ class Binary extends StatelessWidget {
         final date = DateTime.now();
         if (date.second % 10 > 1) {
           if (date.second % 2 == 0) {
-            pool.play(0);
+            pool.play(Platform.isAndroid ? 1 : 0);
           } else {
-            pool.play(1);
+            pool.play(Platform.isAndroid ? 2 : 1);
           }
         } else if (date.second % 60 == 0) {
-          pool.play(2);
+          pool.play(Platform.isAndroid ? 3 : 2);
         } else if (date.second % 10 == 0) {
-          pool.play(3);
+          pool.play(Platform.isAndroid ? 4 : 3);
         }
         return date;
       }),
